@@ -19,3 +19,9 @@ html, body {
 body {
   min-height: 100vh;
 }
+
+input,
+textarea,
+select {
+  font-size: 16px;
+}
