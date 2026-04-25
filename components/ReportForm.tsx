@@ -16,13 +16,14 @@ export default function ReportForm() {
   const [account, setAccount] = useState('');
   const [description, setDescription] = useState('');
   const [images, setImages] = useState<Pending[]>([]);
+  const [acknowledged, setAcknowledged] = useState(false);
   const [state, setState] = useState<SubmitState>({ kind: 'idle' });
 
   const accountOk = account.trim().length > 0;
   const descLen = description.trim().length;
   const descOk = descLen >= 1 && descLen <= DESC_MAX;
   const submitting = state.kind === 'submitting';
-  const canSubmit = accountOk && descOk && !submitting;
+  const canSubmit = accountOk && descOk && acknowledged && !submitting;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -40,6 +41,7 @@ export default function ReportForm() {
       setDescription('');
       images.forEach((p) => URL.revokeObjectURL(p.previewUrl));
       setImages([]);
+      setAcknowledged(false);
     } catch (err) {
       console.error(err);
       const msg =
@@ -52,9 +54,13 @@ export default function ReportForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="bg-[var(--warn-bg)] border border-[#ffd1d1] rounded-xl px-4 py-3 text-xs text-[var(--text)] leading-relaxed">
+        ※ 提報內容會公開顯示。請勿提交不實或誣陷他人之內容。
+      </div>
+
       <div>
         <label className="block text-xs text-[var(--text-muted)] mb-1">
-          詐騙帳號 (Threads / IG)
+          可疑帳號 (Threads / IG)
         </label>
         <input
           value={account}
@@ -93,6 +99,19 @@ export default function ReportForm() {
         </label>
         <ImageUpload value={images} onChange={setImages} disabled={submitting} />
       </div>
+
+      <label className="flex gap-2 items-start text-xs text-[var(--text-muted)] leading-relaxed cursor-pointer select-none">
+        <input
+          type="checkbox"
+          checked={acknowledged}
+          onChange={(e) => setAcknowledged(e.target.checked)}
+          disabled={submitting}
+          className="mt-0.5 shrink-0"
+        />
+        <span>
+          我確認以上內容為本人實際遭遇之經驗,並願意對其真實性負責
+        </span>
+      </label>
 
       <button
         type="submit"

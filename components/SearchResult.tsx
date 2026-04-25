@@ -26,10 +26,13 @@ export default function SearchResult({ query, reports }: Props) {
       <div className="bg-[var(--warn-bg)] border border-[#ffd1d1] rounded-2xl p-6 text-center">
         <div className="text-3xl">⚠️</div>
         <p className="text-base font-semibold text-[var(--warn)] mt-2">
-          這是詐騙帳號
+          疑似詐騙帳號
         </p>
         <p className="text-sm text-[var(--text-muted)] mt-1">
-          已被 {reports.length} 人提報
+          共有 {reports.length} 筆使用者回報
+        </p>
+        <p className="text-[10px] text-[var(--text-muted)] mt-2 tracking-wide">
+          未驗證資料 · 使用者回報
         </p>
       </div>
       {reports.map((r) => (

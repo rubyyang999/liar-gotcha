@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: '詐騙帳號查詢',
-  description: 'Threads / IG 詐騙帳號查詢與提報',
+  title: '可疑帳號回報',
+  description: 'Threads / IG 可疑帳號使用者回報平台',
 };
 
 export default function RootLayout({
@@ -18,6 +19,7 @@ export default function RootLayout({
         <div className="max-w-lg mx-auto pb-12">
           <Header />
           <main className="px-6">{children}</main>
+          <Footer />
         </div>
       </body>
     </html>
